@@ -1,20 +1,14 @@
 # archiveZ
-A python script to bruteforce (Zip, Rar, 7z) password protected archives
-**
-install requirements in cmd
-**
+A python script to bruteforce (Zip, Rar, 7z) password protected archives.
+**install requirements in cmd**
 ```
 pip install -r requirements.txt
 ```
-**
-Run python file 
-**
+**Run python file**
 ```
 py archiveZ.py
 ```
-**
-or
-**
+**or**
 ```
 python archiveZ.py
 ```
