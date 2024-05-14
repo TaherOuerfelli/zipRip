@@ -1,10 +1,11 @@
 #!/usr/bin/Python3
-#A script to bruteforce (Zip, Rar, 7z) password protected archives.(only use in terminal)
-#script by:https://github.com/TaherOuerfelli/ZipRip
+# bruteforce (.zip /.rar /.7z) password protected archives.(USE ONLY IN TERMINAL) 
+# Script by:https://github.com/TaherOuerfelli/ZipRip
+#
+#
 import os
 import patoolib
 import pyzipper
-
 from threading import Thread
 import subprocess
 #init colors for windows
@@ -107,16 +108,21 @@ def verify_7z():
         print("\t\033[31mError:", e)
         return False
 
+#count passwords
+def count_lines(filename):
+    with open(filename, 'r') as file:
+        line_count = sum(1 for line in file)
+    return line_count
 
 #function to extract rar file with the provided password
 def extract_rar(file, passwrd):
     
         global found
         try:
-            if((Isthreading == False) and found == False):
-                print("\t\033[35mTrying password: \033[34m"+ str(passwrd))
-            elif (found == False):
-                print("\t\033[35m-> \033[34m"+ str(passwrd))
+            #if((Isthreading == False) and found == False):
+            #    print("\t\033[35mTrying password: \033[34m"+ str(passwrd))
+            #elif (found == False):
+            #        print("\t\033[35m-> \033[34m"+ str(passwrd))
 
             #try extracting rar file with unrar.exe
             if(extpath!=""):
@@ -125,10 +131,12 @@ def extract_rar(file, passwrd):
                 command =['unrar', 'x', '-p'+passwrd , file]
             subprocess.run(command, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             found = True
-            print("\t\033[32m[+] "+filetype+" file extracted. \n\tPassword = \033[1m\033[33m"+ str(passwrd)+"\033[22m\n")
+            print("\n\n\t\033[32m[+] "+filetype+" file extracted. \n\tPassword = \033[1m\033[33m"+ str(passwrd)+"\033[22m\n")
                 
         except Exception as e:
             #print(e)
+            if(found == False):
+                print(f"\033[F\033[K\033[35m\n\tPassword: {currentline}/{linescount}", end="")
             pass
 
 #function to extract file using patoolib
@@ -136,19 +144,20 @@ def extract_patool(file, passwrd):
     
         global found
         try:
-            if((Isthreading == False) and found == False):
-                print("\t\033[35mTrying password: \033[34m"+ str(passwrd))
-            elif (found == False):
-                print("\t\033[35m-> \033[34m"+ str(passwrd))
+            #if((Isthreading == False) and found == False):
+            #    print("\t\033[35mTrying password: \033[34m"+ str(passwrd))
+            #elif (found == False):
+            #        print("\t\033[35m-> \033[34m"+ str(passwrd))
 
             #extracting rar file with patoolib (slow)
             command = ['patool', 'extract', '--password', passwrd, file, '--outdir', extpath]
             subprocess.run(command, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             found = True
-            print("\t\033[32m[+] "+filetype+" file extracted. \n\tPassword = \033[1m\033[33m"+ str(passwrd)+"\033[22m\n")
+            print("\n\n\t\033[32m[+] "+filetype+" file extracted. \n\tPassword = \033[1m\033[33m"+ str(passwrd)+"\033[22m\n")
                 
-        except Exception as e:
-            #print(e)
+        except:
+            if(found == False):
+                print(f"\033[F\033[K\033[35m\n\tPassword: {currentline}/{linescount}", end="")
             pass
 
 #function to extract zip file with the provided password
@@ -156,18 +165,20 @@ def extract_zip(file, passwrd):
     global found
 
     try:
-        if((Isthreading == False) and found == False):
-            print("\t\033[35mTrying password: \033[34m"+ str(passwrd))
-        elif (found == False):
-                print("\t\033[35m-> \033[34m"+ str(passwrd))
+        #if((Isthreading == False) and found == False):
+        #    print("\t\033[35mTrying password: \033[34m"+ str(passwrd))
+        #elif (found == False):
+        #        print("\t\033[35m-> \033[34m"+ str(passwrd))
         #try extracting zip file using pyzipper module
         with pyzipper.AESZipFile(file) as zf:
             zf.pwd = passwrd.encode()  # Set the password
             zf.extractall(extpath)
         found = True
-        print("\n\t\033[32m[+] "+filetype+" file extracted. \n\tPassword = \033[1m\033[33m"+ str(passwrd)+"\033[22m\n")
+        print("\n\n\t\033[32m[+] "+filetype+" file extracted. \n\tPassword = \033[1m\033[33m"+ str(passwrd)+"\033[22m\n")
 
     except:
+        if(found == False):
+            print(f"\033[F\033[K\033[35m\n\tPassword: {currentline}/{linescount}", end="")
         pass
 
 #function to extract 7z file with the provided password
@@ -175,8 +186,8 @@ def extract_7z(file, passwrd):
     
         global found
         try:
-            if(found == False):
-                print("\t\033[35mTrying password: \033[34m"+ str(passwrd))
+            #if(found == False):
+            #    print("\t\033[35mTrying password: \033[34m"+ str(passwrd))
             #run a subprocess using 7z in the commandline
             if(extpath!=""):
                 command = ['7z', 'x', file,'-p'+passwrd,'-o'+extpath,'-y' ]
@@ -184,16 +195,17 @@ def extract_7z(file, passwrd):
                 command = ['7z', 'x', file,'-p'+passwrd,'-y' ]
             subprocess.run(command, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             found = True
-            print("\t\033[32m[+] "+filetype+" file extracted. \n\tPassword = \033[1m\033[33m"+ str(passwrd)+"\033[22m\n")
+            print("\n\n\t\033[32m[+] "+filetype+" file extracted. \n\tPassword = \033[1m\033[33m"+ str(passwrd)+"\033[22m\n")
                 
         except Exception as e:
             #print(e)
+            if(found == False):
+                print(f"\033[F\033[K\033[35m\n\tPassword: {currentline}/{linescount}", end="")
             pass
 
-
-
-def main():
-        #display file type
+#display cracking proccess
+def display():
+    #display file type
         if(filetype == "rar"):
                 print("\n\n\t\033[35mType: \033[36mRar")
         elif(filetype == "zip"):
@@ -215,15 +227,21 @@ def main():
         else:
                 exit(4)
         if(Isthreading == True):
-                print("\033[36m\tMultithreading enabled \n\t(Trying as many passwords as possible)")
+                print("\033[36m\tMultithreading enabled")
         print("\033[35m\n\tTrying to extract (please wait)..")
+        print(f"\033[F\033[K\033[35m\n\tPassword: {currentline}/{linescount}", end="")
+
+def main():
+        global currentline
+        clear()
+        display()
         #open wordlist
         f = open(wordlist, "r")
         #loop through all passwords
         for i in f.readlines():
                 #current password
                 password = i.strip()
-                
+                currentline+=1
                 if(found == False):
                         if (Isthreading == True):
                                 #thread execution
@@ -308,7 +326,8 @@ if __name__ == '__main__':
         while(not verify_file_w(wordlist)):
                 wordlist = input("\n\t\033[1m\033[36mWordlist path : \033[33m\033[37m ")
                 wordlist = wordlist.strip()
-                
+        linescount = count_lines(wordlist)
+        currentline = 0
 
         
         #ask for threading (extract files at the same time to speed up)
@@ -322,7 +341,6 @@ if __name__ == '__main__':
         
         
         #start brute force
-        clear()
         main()
 
         #show last message
