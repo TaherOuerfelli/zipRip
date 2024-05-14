@@ -15,8 +15,9 @@ py archiveZ.py
 python archiveZ.py
 ```
 
-Uses `UnRar.exe` or `7z.exe` from the command line 
+
 >[!IMPORTANT]
->>Make sure to download and set unrar and 7z in PATH
+>Uses `UnRar.exe` or `7z.exe` from the command line 
+>Make sure to download and set unrar and 7z in PATH
 
 (uses `patoolib` in case unrar/7z are not installed **but loses speed**)
