@@ -1,4 +1,4 @@
-# archiveZ
+# ZipRip.py
 A python script to bruteforce (Zip, Rar, 7z) password protected archives.
 
 
@@ -8,11 +8,11 @@ pip install -r requirements.txt
 ```
 **Run python file**
 ```
-py archiveZ.py
+py ziprip.py
 ```
 **or**
 ```
-python archiveZ.py
+python ziprip.py
 ```
 
 
