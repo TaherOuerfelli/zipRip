@@ -17,7 +17,7 @@ python archiveZ.py
 
 
 >[!IMPORTANT]
->-Uses **UnRar** or **7z** from the command line 
+>-Uses **UnRar** or **7z** from the command line \n
 >-Make sure to download unrar and 7z
 >-Add `UnRar.exe` and `7z.exe` in PATH >for Windows
 
