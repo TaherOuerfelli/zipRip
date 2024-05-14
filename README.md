@@ -2,11 +2,11 @@
 A python script to bruteforce (Zip, Rar, 7z) password protected archives.
 
 
-## Install requirements in cmd
+## Install requirements
 ```
 pip install -r requirements.txt
 ```
-## Run python file
+**Run python file**
 ```
 py archiveZ.py
 ```
