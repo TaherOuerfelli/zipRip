@@ -2,17 +2,17 @@
 A python script to bruteforce (Zip, Rar, 7z) password protected archives.
 
 
-## Install requirements
+### Install requirements
 ```
 pip install -r requirements.txt
 ```
-**Run python file**
-```
-py ziprip.py
-```
-**or**
+### Run python file
 ```
 python ziprip.py
+```
+*or*
+```
+py ziprip.py
 ```
 
 
