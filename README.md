@@ -1,5 +1,5 @@
 # zipRip.py
-A python script to bruteforce (Zip, Rar, 7z) password protected archives.
+A python script to bruteforce (.zip, .rar, .7z) password protected archives.
 
 ### Install requirements
 ```
